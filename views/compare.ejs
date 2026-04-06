@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : 'Compare Teams' %> - Football Stats Comparison</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('partials/header', { page: typeof page !== 'undefined' ? page : 'compare' }) %>
+    
+    <main class="container my-4">
+        <% if (typeof error !== 'undefined' && error) { %>
+            <div class="alert alert-danger" role="alert">
+                <strong>Error:</strong> <%= error %>
+            </div>
+        <% } %>
+
+        <% if (typeof comparison !== 'undefined' && comparison && (typeof showForm === 'undefined' || !showForm)) { %>
+            <!-- Comparison Results View -->
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="mb-4">Team Comparison</h1>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= comparison.league.name %> - <%= comparison.league.season %> Season
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <!-- Team A -->
+                <div class="col-md-6">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <% if (comparison.teamA.logo) { %>
+                                <img src="<%= comparison.teamA.logo %>" alt="<%= comparison.teamA.name %>" class="mb-3" style="max-height: 100px;">
+                            <% } %>
+                            <h3 class="card-title"><%= comparison.teamA.name %></h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- Team B -->
+                <div class="col-md-6">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <% if (comparison.teamB.logo) { %>
+                                <img src="<%= comparison.teamB.logo %>" alt="<%= comparison.teamB.name %>" class="mb-3" style="max-height: 100px;">
+                            <% } %>
+                            <h3 class="card-title"><%= comparison.teamB.name %></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Statistics Comparison</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Statistic</th>
+                                    <th class="text-center">Team A</th>
+                                    <th class="text-center">Team B</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Games Played</strong></td>
+                                    <td class="text-center"><%= comparison.teamA.gamesPlayed %></td>
+                                    <td class="text-center"><%= comparison.teamB.gamesPlayed %></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Wins</strong></td>
+                                    <td class="text-center <%= typeof betterTeam !== 'undefined' && betterTeam.wins === 'A' ? 'table-success fw-bold' : '' %>">
+                                        <%= comparison.teamA.wins %>
+                                    </td>
+                                    <td class="text-center <%= typeof betterTeam !== 'undefined' && betterTeam.wins === 'B' ? 'table-success fw-bold' : '' %>">
+                                        <%= comparison.teamB.wins %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Draws</strong></td>
+                                    <td class="text-center"><%= comparison.teamA.draws %></td>
+                                    <td class="text-center"><%= comparison.teamB.draws %></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Losses</strong></td>
+                                    <td class="text-center <%= typeof betterTeam !== 'undefined' && betterTeam.losses === 'A' ? 'table-success fw-bold' : '' %>">
+                                        <%= comparison.teamA.losses %>
+                                    </td>
+                                    <td class="text-center <%= typeof betterTeam !== 'undefined' && betterTeam.losses === 'B' ? 'table-success fw-bold' : '' %>">
+                                        <%= comparison.teamB.losses %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Goals Scored</strong></td>
+                                    <td class="text-center <%= typeof betterTeam !== 'undefined' && betterTeam.goalsFor === 'A' ? 'table-success fw-bold' : '' %>">
+                                        <%= comparison.teamA.goalsFor %>
+                                    </td>
+                                    <td class="text-center <%= typeof betterTeam !== 'undefined' && betterTeam.goalsFor === 'B' ? 'table-success fw-bold' : '' %>">
+                                        <%= comparison.teamB.goalsFor %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Goals Conceded</strong></td>
+                                    <td class="text-center <%= typeof betterTeam !== 'undefined' && betterTeam.goalsAgainst === 'A' ? 'table-success fw-bold' : '' %>">
+                                        <%= comparison.teamA.goalsAgainst %>
+                                    </td>
+                                    <td class="text-center <%= typeof betterTeam !== 'undefined' && betterTeam.goalsAgainst === 'B' ? 'table-success fw-bold' : '' %>">
+                                        <%= comparison.teamB.goalsAgainst %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Average Goals per Game</strong></td>
+                                    <td class="text-center <%= typeof betterTeam !== 'undefined' && betterTeam.avgGoalsFor === 'A' ? 'table-success fw-bold' : '' %>">
+                                        <%= comparison.teamA.avgGoalsFor %>
+                                    </td>
+                                    <td class="text-center <%= typeof betterTeam !== 'undefined' && betterTeam.avgGoalsFor === 'B' ? 'table-success fw-bold' : '' %>">
+                                        <%= comparison.teamB.avgGoalsFor %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Last 5 Matches (Form)</strong></td>
+                                    <td class="text-center">
+                                        <span class="form-string"><%= comparison.teamA.form %></span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="form-string"><%= comparison.teamB.form %></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back to Compare Button -->
+            <div class="mt-4 text-center">
+                <a href="/compare" class="btn btn-primary btn-lg">
+                    Compare Another
+                </a>
+            </div>
+
+        <% } else { %>
+            <!-- Comparison Form View -->
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h1 class="mb-4">Compare Two Teams</h1>
+                    <p class="lead mb-4">
+                        Select a league, season, and two teams to compare their statistics.
+                    </p>
+
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <form id="compareForm" method="GET" action="/compare/result">
+                                <div class="mb-3">
+                                    <label for="leagueId" class="form-label">League</label>
+                                    <select class="form-select" id="leagueId" name="leagueId" required>
+                                        <option value="">Select a league...</option>
+                                        <% if (typeof popularLeagues !== 'undefined') { %>
+                                            <% popularLeagues.forEach(league => { %>
+                                                <option value="<%= league.id %>"><%= league.name %> (<%= league.country %>)</option>
+                                            <% }); %>
+                                        <% } %>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="season" class="form-label">Season</label>
+                                    <select class="form-select" id="season" name="season" required>
+                                        <option value="">Select a season...</option>
+                                        <% if (typeof seasons !== 'undefined') { %>
+                                            <% seasons.forEach(season => { %>
+                                                <option value="<%= season %>"><%= season %></option>
+                                            <% }); %>
+                                        <% } %>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="teamAId" class="form-label">Team A</label>
+                                    <select class="form-select" id="teamAId" name="teamAId" required disabled>
+                                        <option value="">Select league and season first...</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="teamBId" class="form-label">Team B</label>
+                                    <select class="form-select" id="teamBId" name="teamBId" required disabled>
+                                        <option value="">Select league and season first...</option>
+                                    </select>
+                                </div>
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg" id="submitBtn" disabled>
+                                        Compare Teams
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </main>
+    
+    <%- include('partials/footer') %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

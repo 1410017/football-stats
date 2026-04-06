@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : 'Home' %> - Football Stats Comparison</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('partials/header', { page: typeof page !== 'undefined' ? page : 'home' }) %>
+    
+    <main class="container my-4">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="text-center mb-5">
+                    <h1 class="display-4 mb-3">⚽ Football Stats Comparison</h1>
+                    <p class="lead">
+                        Compare two football teams side-by-side using real match data from top leagues around the world.
+                    </p>
+                    <p class="text-muted">
+                        Get detailed statistics including wins, losses, goals scored, goals conceded, and recent form.
+                    </p>
+                </div>
+
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body text-center p-5">
+                        <h2 class="card-title mb-4">Ready to Compare?</h2>
+                        <p class="card-text mb-4">
+                            Select a league, season, and two teams to see a detailed side-by-side comparison.
+                        </p>
+                        <a href="/compare" class="btn btn-primary btn-lg">
+                            Compare Two Teams →
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">📊 Real Statistics</h5>
+                                <p class="card-text">
+                                    Compare teams using real match data from API-FOOTBALL, including goals, wins, losses, and more.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">🌍 Multiple Leagues</h5>
+                                <p class="card-text">
+                                    Compare teams from Premier League, La Liga, Bundesliga, Serie A, Africa Cup of Nations, and more.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+    
+    <%- include('partials/footer') %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>
